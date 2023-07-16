@@ -1,56 +1,52 @@
-#include <iostream>
-#include <queue>
+// 미로 탐색
+#include<iostream>
+#include<queue>
 using namespace std;
 
-const int MAX_N = 100;
-const int MAX_M = 100;
-
-int a[MAX_N][MAX_M];
-bool visit[MAX_N][MAX_M];
-int dx[4] = {-1, 1, 0, 0};
-int dy[4] = {0, 0, -1, 1};
+int a[100][100];
+bool visit[100][100];
+int by[4] = { 1,0,-1,0 };
+int bx[4] = { 0,1,0,-1 };
 int n, m;
 
 void bfs(int r, int c) {
-    queue<pair<int, int>> q;
-    q.push({r, c});
-    visit[r][c] = true;
+	queue<pair<int, int>> q;
+	q.push({ r,c });
+	visit[r][c] = 1;
 
-    while (!q.empty()) {
-        int x = q.front().first;
-        int y = q.front().second;
-        q.pop();
+	while (!q.empty()) {
+		int r = q.front().first;
+		int c = q.front().second;
+		q.pop();
 
-        for (int i = 0; i < 4; i++) {
-            int nx = x + dx[i];
-            int ny = y + dy[i];
+		for (int i = 0; i < 4; i++) {
+			int rr = r + by[i];
+			int cc = c + bx[i];
 
-            if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
-            if (a[nx][ny] == 0 || visit[nx][ny]) continue;
+			if (rr < 0 || cc < 0 || rr >= n || cc >= m) continue;
+			if (a[rr][cc] == 0 || visit[rr][cc] == 1) continue;
 
-            a[nx][ny] = a[x][y] + 1;
-            visit[nx][ny] = true;
-            q.push({nx, ny});
-        }
-    }
+			a[rr][cc] = a[r][c] + 1;
+			visit[rr][cc] = 1;
+			q.push({ rr,cc });
+		}
+	}
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+	cin.tie(NULL);
+	ios_base::sync_with_stdio(false);
 
-    cin >> n >> m;
+	cin >> n >> m;
 
-    for (int i = 0; i < n; i++) {
-        string str;
-        cin >> str;
-        for (int j = 0; j < m; j++) {
-            a[i][j] = str[j] - '0';
-        }
-    }
-
-    bfs(0, 0);
-    cout << a[n - 1][m - 1] << endl;
-
-    return 0;
+	string String;
+	for (int i = 0; i < n; i++) {
+		cin>>String;
+		for (int j = 0; j < m; j++) {
+			a[i][j] = String[j] - '0';
+		}
+	}
+	bfs(0, 0);
+	cout << a[n - 1][m - 1] << endl;
 }
+
