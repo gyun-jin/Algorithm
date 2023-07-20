@@ -21,7 +21,6 @@ void bfs(int x, int y) {
 			if (pict[k][h] == 1 && visited[k][h] == 0) {
 				q.push({ k,h });
 				flag = true;
-				cnt++;
 			}
 
 			while (!q.empty()) {
@@ -30,13 +29,13 @@ void bfs(int x, int y) {
 				y = q.front().second;
 				visited[x][y] = 1;
 				q.pop();
+				cnt++;
 
 				for (int i = 0; i < 4; i++) {
 					int xx = x + bx[i];
 					int yy = y + by[i];
 					if (xx < 0 || yy < 0 || xx >= 500 || yy >= 500 || visited[xx][yy] == 1 || pict[xx][yy] == 0) continue;
 
-					cnt++;
 					q.push({ xx,yy });
 					visited[xx][yy] = 1;
 				}
